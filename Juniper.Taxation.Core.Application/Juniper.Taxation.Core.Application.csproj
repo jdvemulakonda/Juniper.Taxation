@@ -14,8 +14,4 @@
     <ProjectReference Include="..\Juniper.Core.Domain\Juniper.Taxation.Core.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Validators\" />
-  </ItemGroup>
-
 </Project>

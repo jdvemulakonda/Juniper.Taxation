@@ -1,4 +1,6 @@
+using System.Reflection;
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Juniper.Infrastrutcure.ExternalCommunication.Service;
 using Juniper.Taxation.Core.Application;
 using Juniper.Taxation.Core.Application.Interfaces;
+using Juniper.Taxation.Core.Application.Models.Validators;
 using Juniper.Taxation.Filters;
 using Juniper.Taxation.Infrastructure.Providers.TaxJar;
 using Juniper.Taxation.Mappers;
@@ -38,14 +41,11 @@ namespace Juniper.Taxation
 
             services.AddHttpClient("TaxJarHttpClient");
 
-            services.AddMvcCore(options => options.AllowEmptyInputInBodyModelBinding = true)
-                .AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.IgnoreNullValues = true;
-            });
+            services.AddMvcCore(options => { options.EnableEndpointRouting = false; });
+                //.AddFluentValidation(mvcconvifguration =>
+                //    mvcconvifguration.RegisterValidatorsFromAssemblyContaining<TaxByLocationQueryValidator>());
 
             services.AddScoped<IHttpClientAdapter, HttpClientAdapter>();
-
             services.AddScoped<ITaxProviderService, TaxJarService>();
             services.AddScoped<ITaxCalculationService, TaxCalculationService>();
 
@@ -65,10 +65,10 @@ namespace Juniper.Taxation
         {
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
 
             app.UseHttpsRedirection();
 

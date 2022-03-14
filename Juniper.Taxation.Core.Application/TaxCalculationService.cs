@@ -1,11 +1,10 @@
 ﻿using Juniper.Taxation.Core.Application.Interfaces;
-using Juniper.Taxation.Core.Domain;
 using Juniper.Taxation.Core.Domain.Entities;
-using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using Juniper.Taxation.Core.Application.Exceptions;
 using Juniper.Taxation.Core.Application.Models;
-using Juniper.Taxation.Core.Application.Wrappers;
+using Juniper.Taxation.Core.Application.Models.Validators;
 using Microsoft.Extensions.Logging;
 
 namespace Juniper.Taxation.Core.Application
@@ -25,7 +24,13 @@ namespace Juniper.Taxation.Core.Application
 
         public async Task<SalesTaxByOrderResponse> CalculateSalesTaxByOrder(OrderSalesTaxCommand command)
         {
-            
+            var validator = new OrderSalesTaxCommandValidator();
+            var validationResult =await validator.ValidateAsync(command);
+
+            if (validationResult.Errors.Count>0)
+            {
+                throw new ValidationException(validationResult);
+            }
 
             var result = await _taxProvider.CalculateSalesTaxByOrderAsync(command);
 
@@ -38,6 +43,14 @@ namespace Juniper.Taxation.Core.Application
 
         public async Task<GetTaxRateByLocationResponse> GetTaxRateByLocation(TaxByLocationQuery query)
         {
+            var validator = new TaxByLocationQueryValidator();
+            var validationResult = await validator.ValidateAsync(query);
+
+            if (validationResult.Errors.Count > 0)
+            {
+                throw new ValidationException(validationResult);
+            }
+
             var result = await _taxProvider.GetTaxRateByLocationAsync(query);
 
             return _mapper.Map<GetTaxRateByLocationResponse>(new GetTaxRateByLocationResponse

@@ -1,9 +1,7 @@
-﻿using System.Security.Cryptography;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Juniper.Taxation.Core.Application.Interfaces;
 using Juniper.Taxation.Core.Application.Models;
-using Juniper.Taxation.Core.Domain;
-using Juniper.Taxation.Core.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -24,6 +22,8 @@ namespace Juniper.Taxation.Controllers
 
         [HttpGet]
         [Route("taxrate")]
+        [ProducesResponseType(typeof(GetTaxRateByLocationResponse),StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetTaxRateByLocationAsync([FromQuery] TaxByLocationQuery query)
         {
             return Ok(await _taxCalculationService.GetTaxRateByLocation(query));
@@ -31,6 +31,8 @@ namespace Juniper.Taxation.Controllers
 
         [HttpPost]
         [Route("ordersalestax")]
+        [ProducesResponseType(typeof(SalesTaxByOrderResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CalculateSalesTaxByOrderAsync([FromBody] OrderSalesTaxCommand command)
         {
             return Ok(await _taxCalculationService.CalculateSalesTaxByOrder(command));

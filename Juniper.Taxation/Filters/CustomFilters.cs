@@ -20,7 +20,7 @@ namespace Juniper.Taxation.Filters
                 {
                     Type = "string"
                 },
-                Description = "ProviderK",
+                Description = "Provider Key to access the Api: Eg:Juniper",
             });
         }
     }
