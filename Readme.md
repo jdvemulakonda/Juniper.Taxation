@@ -8,12 +8,12 @@ TaxApi API endpoints provide detailed sales tax rates and calculations. Currentl
 
 * [Getting Started](#getting-started)
 * [Prerequisites](#prerequisites)
+* [Required software instalations](#required-software)
 * [Code Structure](#code-structure)
-* [ApiConsumer Configuration](#api-configuration)
-* [Api Actions](#api-actions) 
-* [Swagger Documetation](#api-swagger-field) 
-* [Testing](#testing)
-* [Version History](#api-version-history) 
+* [ApiConsumer Configuration](#api-config)
+* [Api Actions/Methods](#api-method) 
+* [Swagger Documentation](#swagger) 
+
 
 
 ## Getting Started
@@ -78,7 +78,7 @@ The Actions require a consumer key for the provide ( Taxjar in this case). The p
 
 
 
-## Swagger Documetation
+## Swagger Documentation
 LaunchSetting.js has the swagger URL as the launch URL. Once the code is executed users will be able to see the SwaggerUI on their browsers as below. 
 
 ![image](https://github.com/jdvemulakonda/Juniper.Taxation/blob/master/swagger1.png)
